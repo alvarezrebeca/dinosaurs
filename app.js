@@ -13,6 +13,13 @@ function Dino(species, weight, height, diet, where, when, fact) {
 const dino = new Dino();
 
 // Create Human Object
+function Human(name, weight, height, diet) {
+  this.name = name;
+  this.weight = weight;
+  this.height = height;
+  this.diet = diet;
+}
+const human = new Human();
 
 // Use IIFE to get human data from form
 
