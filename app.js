@@ -14,12 +14,27 @@ function Dino(species, weight, height, diet, where, when, fact) {
 const fetchDinoData = async function fetchDinoJSON() {
   const responseDinoData = await fetch('./dino.json');
   const dinoData = await responseDinoData.json();
-  console.log(dinoData.Dinos);
   return dinoData.Dinos;
 };
 
 // Create Dino Objects
-const dino = new Dino();
+const createDinoObj = async function () {
+  const dinoDB = [];
+  const dinoJson = await fetchDinoData();
+  dinoJson.forEach(function (dinoJson) {
+    const dino = new Dino(
+      dinoJson.species,
+      dinoJson.weight,
+      dinoJson.height,
+      dinoJson.diet,
+      dinoJson.where,
+      dinoJson.when,
+      dinoJson.fact
+    );
+    dinoDB.push(dino);
+  });
+  console.log(dinoDB);
+};
 
 // Create Human Object
 function Human(name, weight, height, diet) {
@@ -62,6 +77,6 @@ getHumanData.addEventListener('click', function () {
   } else {
     console.log('lets create some human and dinos');
     console.log(name);
-    fetchDinoData();
+    createDinoObj();
   }
 });
