@@ -39,3 +39,19 @@ const human = new Human();
 // Remove form from screen
 
 // On button click, prepare and display infographic
+const getHumanData = document.getElementById('btn');
+
+getHumanData.addEventListener('click', function () {
+  let message = '';
+  let name = document.getElementById('name').value;
+  let feet = document.getElementById('feet').value;
+  let inches = document.getElementById('inches').value;
+  let weight = document.getElementById('weight').value;
+  if (name == '' || feet == '' || inches == '' || weight == '') {
+    message = 'Some inputs are missing, please insert your data';
+    alert(message);
+  } else {
+    console.log('lets create some human and dinos');
+    console.log(name);
+  }
+});
