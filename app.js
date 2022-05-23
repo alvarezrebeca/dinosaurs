@@ -9,6 +9,15 @@ function Dino(species, weight, height, diet, where, when, fact) {
   this.fact = fact;
 }
 
+// Fetch dino json
+// https://dmitripavlutin.com/javascript-fetch-async-await/#1-intro-to-fetch
+const fetchDinoData = async function fetchDinoJSON() {
+  const responseDinoData = await fetch('./dino.json');
+  const dinoData = await responseDinoData.json();
+  console.log(dinoData.Dinos);
+  return dinoData.Dinos;
+};
+
 // Create Dino Objects
 const dino = new Dino();
 
@@ -53,5 +62,6 @@ getHumanData.addEventListener('click', function () {
   } else {
     console.log('lets create some human and dinos');
     console.log(name);
+    fetchDinoData();
   }
 });
