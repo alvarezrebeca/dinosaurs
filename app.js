@@ -43,9 +43,6 @@ function Human(name, weight, height, diet) {
   this.height = height;
   this.diet = diet;
 }
-const human = new Human();
-
-// Use IIFE to get human data from form
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches.
@@ -67,16 +64,27 @@ const getHumanData = document.getElementById('btn');
 
 getHumanData.addEventListener('click', function () {
   let message = '';
-  let name = document.getElementById('name').value;
-  let feet = document.getElementById('feet').value;
-  let inches = document.getElementById('inches').value;
-  let weight = document.getElementById('weight').value;
-  if (name == '' || feet == '' || inches == '' || weight == '') {
+  const formName = document.getElementById('name').value;
+  const formFeet = document.getElementById('feet').value;
+  const formInches = document.getElementById('inches').value;
+  const formWeight = document.getElementById('weight').value;
+  if (formName == '' || formFeet == '' || formInches == '' || formWeight == '') {
     message = 'Some inputs are missing, please insert your data';
     alert(message);
   } else {
     console.log('lets create some human and dinos');
-    console.log(name);
     createDinoObj();
+
+    // Use IIFE to get human data from form
+    (function createHumanObj() {
+      const name = document.getElementById('name').value;
+      const weight = document.getElementById('weight').value;
+      const height =
+        +document.getElementById('feet').value * 12 + +document.getElementById('inches').value;
+      const diet = document.getElementById('diet').value.toLowerCase();
+      const human = new Human(name, weight, height, diet);
+      console.log(human);
+      return human;
+    })();
   }
 });
