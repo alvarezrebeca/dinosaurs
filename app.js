@@ -58,6 +58,10 @@ function Human(name, weight, height, diet) {
 // Add tiles to DOM
 
 // Remove form from screen
+// https://www.geeksforgeeks.org/how-to-remove-an-html-element-using-javascript/
+const removeFormFromScreen = function () {
+  document.getElementById('dino-compare').remove();
+};
 
 // On button click, prepare and display infographic
 const getHumanData = document.getElementById('btn');
@@ -86,5 +90,7 @@ getHumanData.addEventListener('click', function () {
       console.log(human);
       return human;
     })();
+
+    removeFormFromScreen();
   }
 });
