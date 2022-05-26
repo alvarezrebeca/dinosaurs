@@ -100,6 +100,7 @@ const randomFact = function random(weight, height, diet, fact, human) {
 };
 
 // Generate Tiles for each Dino in Array
+// https://developer.mozilla.org/de/docs/Web/API/Document/createElement
 const createTiles = function (dinoElement, humanElement) {
   const grid = document.getElementById('grid');
   let tiles = document.createElement('div');
