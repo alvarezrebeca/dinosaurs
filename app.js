@@ -175,13 +175,13 @@ getHumanData.addEventListener('click', async function () {
 
     // Init of dinos
     const createdDino = await createDinoObj();
+
+    // add human to dino array
     createdDino.splice(4, 0, createdHuman);
 
     removeFormFromScreen();
 
-    console.log(createdHuman);
-    console.log(createdDino);
-
+    // create tiles of dino array
     for (let count = 0; count < createdDino.length; count++) {
       createTiles(createdDino[count], createdHuman);
     }
