@@ -84,7 +84,6 @@ const compareHeight = function (height, human) {
 // random fact method
 const randomFact = function random(weight, height, diet, fact, human) {
   let randomNumber = Math.floor(Math.random() * 7);
-  console.log(randomNumber);
   switch (randomNumber) {
     case 0:
       resultDiet = compareDiet(diet, human);
@@ -160,8 +159,6 @@ getHumanData.addEventListener('click', async function () {
     message = 'Some inputs are missing, please insert your data';
     alert(message);
   } else {
-    console.log("Let's create a human and some dinos!");
-
     // Use IIFE to get human data from form
     const createdHuman = (function createHumanObj() {
       const name = document.getElementById('name').value;
