@@ -44,18 +44,6 @@ function Human(name, weight, height, diet) {
   this.diet = diet;
 }
 
-// Use IIFE to get human data from form
-const createHuman = (function createHumanObj() {
-  const name = document.getElementById('name').value;
-  const weight = document.getElementById('weight').value;
-  const height =
-    +document.getElementById('feet').value * 12 + +document.getElementById('inches').value;
-  const diet = document.getElementById('diet').value.toLowerCase();
-  const human = new Human(name, weight, height, diet);
-  console.log(human);
-  return human;
-})();
-
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches.
 
@@ -66,8 +54,37 @@ const createHuman = (function createHumanObj() {
 // NOTE: Weight in JSON file is in lbs, height in inches.
 
 // Generate Tiles for each Dino in Array
+const createTiles = function (dinoElement) {
+  const grid = document.getElementById('grid');
+  let tiles = document.createElement('div');
+  tiles.className = 'grid-item';
 
-// Add tiles to DOM
+  const name = document.createElement('h3');
+  const image = document.createElement('img');
+  const fact = document.createElement('p');
+
+  name.textContent = dinoElement.species || dinoElement.name;
+
+  if (dinoElement.species != undefined) {
+    let dinoSpecies = dinoElement.species.toLowerCase();
+    image.src = `./images/${dinoSpecies}.png`;
+  } else if (dinoElement.name != undefined) {
+    image.src = `./images/human.png`;
+  }
+
+  if (dinoElement.species === 'Pigeon') {
+    fact.textContent = 'All birds are Dinosaurs';
+  } else {
+    fact.textContent = dinoElement.fact;
+  }
+
+  tiles.appendChild(name);
+  tiles.appendChild(image);
+  tiles.appendChild(fact);
+
+  // Add tiles to DOM
+  grid.appendChild(tiles);
+};
 
 // Remove form from screen
 // https://www.geeksforgeeks.org/how-to-remove-an-html-element-using-javascript/
@@ -90,8 +107,17 @@ getHumanData.addEventListener('click', async function () {
   } else {
     console.log("Let's create a human and some dinos!");
 
-    // Init of human
-    const createdHuman = createHuman;
+    // Use IIFE to get human data from form
+    const createdHuman = (function createHumanObj() {
+      const name = document.getElementById('name').value;
+      const weight = document.getElementById('weight').value;
+      const height =
+        +document.getElementById('feet').value * 12 + +document.getElementById('inches').value;
+      const diet = document.getElementById('diet').value.toLowerCase();
+      const human = new Human(name, weight, height, diet);
+      return human;
+    })();
+    console.log(createdHuman);
 
     // Init of dinos
     const createdDino = await createDinoObj();
@@ -99,5 +125,9 @@ getHumanData.addEventListener('click', async function () {
     console.log(createdDino);
 
     removeFormFromScreen();
+
+    for (let count = 0; count < createdDino.length; count++) {
+      createTiles(createdDino[count]);
+    }
   }
 });
