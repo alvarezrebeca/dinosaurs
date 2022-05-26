@@ -33,7 +33,7 @@ const createDinoObj = async function () {
     );
     dinoDB.push(dino);
   });
-  console.log(dinoDB);
+  return dinoDB;
 };
 
 // Create Human Object
@@ -43,6 +43,18 @@ function Human(name, weight, height, diet) {
   this.height = height;
   this.diet = diet;
 }
+
+// Use IIFE to get human data from form
+const createHuman = (function createHumanObj() {
+  const name = document.getElementById('name').value;
+  const weight = document.getElementById('weight').value;
+  const height =
+    +document.getElementById('feet').value * 12 + +document.getElementById('inches').value;
+  const diet = document.getElementById('diet').value.toLowerCase();
+  const human = new Human(name, weight, height, diet);
+  console.log(human);
+  return human;
+})();
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches.
@@ -66,7 +78,7 @@ const removeFormFromScreen = function () {
 // On button click, prepare and display infographic
 const getHumanData = document.getElementById('btn');
 
-getHumanData.addEventListener('click', function () {
+getHumanData.addEventListener('click', async function () {
   let message = '';
   const formName = document.getElementById('name').value;
   const formFeet = document.getElementById('feet').value;
@@ -76,20 +88,15 @@ getHumanData.addEventListener('click', function () {
     message = 'Some inputs are missing, please insert your data';
     alert(message);
   } else {
-    console.log('lets create some human and dinos');
-    createDinoObj();
+    console.log("Let's create a human and some dinos!");
 
-    // Use IIFE to get human data from form
-    (function createHumanObj() {
-      const name = document.getElementById('name').value;
-      const weight = document.getElementById('weight').value;
-      const height =
-        +document.getElementById('feet').value * 12 + +document.getElementById('inches').value;
-      const diet = document.getElementById('diet').value.toLowerCase();
-      const human = new Human(name, weight, height, diet);
-      console.log(human);
-      return human;
-    })();
+    // Init of human
+    const createdHuman = createHuman;
+
+    // Init of dinos
+    const createdDino = await createDinoObj();
+    createdDino.splice(4, 0, createdHuman);
+    console.log(createdDino);
 
     removeFormFromScreen();
   }
