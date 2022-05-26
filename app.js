@@ -46,15 +46,62 @@ function Human(name, weight, height, diet) {
 
 // Create Dino Compare Method 1
 // NOTE: Weight in JSON file is in lbs, height in inches.
+const compareDiet = function (diet, human) {
+  const dinoDiet = diet;
+  if (dinoDiet == human.diet) {
+    return 'You have the same diet.';
+  } else {
+    return 'You have not the same diet.';
+  }
+};
 
 // Create Dino Compare Method 2
 // NOTE: Weight in JSON file is in lbs, height in inches.
+const compareWeight = function (weight, human) {
+  const dinoWeight = weight;
+  if (dinoWeight == human.weight) {
+    return 'You have the same weight.';
+  } else if (dinoWeight < human.weight) {
+    return 'You have more weight.';
+  } else {
+    return 'You have less weight.';
+  }
+};
 
 // Create Dino Compare Method 3
 // NOTE: Weight in JSON file is in lbs, height in inches.
+const compareHeight = function (height, human) {
+  const dinoHeight = height;
+  if (dinoHeight == human.height) {
+    return 'You have the same height.';
+  } else if (dinoHeight < human.height) {
+    return 'You are higher.';
+  } else {
+    return 'You are smaller.';
+  }
+};
+
+// random fact method
+const randomFact = function random(weight, height, diet, fact, human) {
+  let randomNumber = Math.floor(Math.random() * 7);
+  console.log(randomNumber);
+  switch (randomNumber) {
+    case 0:
+      resultDiet = compareDiet(diet, human);
+      return resultDiet;
+    case 1:
+      resultWeight = compareWeight(weight, human);
+      return resultWeight;
+    case 2:
+      resultHeight = compareHeight(height, human);
+      return resultHeight;
+    default:
+      return fact;
+  }
+};
 
 // Generate Tiles for each Dino in Array
-const createTiles = function (dinoElement) {
+const createTiles = function (dinoElement, humanElement) {
   const grid = document.getElementById('grid');
   let tiles = document.createElement('div');
   tiles.className = 'grid-item';
@@ -74,6 +121,14 @@ const createTiles = function (dinoElement) {
 
   if (dinoElement.species === 'Pigeon') {
     fact.textContent = 'All birds are Dinosaurs';
+  } else if (dinoElement.hasOwnProperty('fact')) {
+    fact.textContent = randomFact(
+      dinoElement.weight,
+      dinoElement.height,
+      dinoElement.diet,
+      dinoElement.fact,
+      humanElement
+    );
   } else {
     fact.textContent = dinoElement.fact;
   }
@@ -117,17 +172,18 @@ getHumanData.addEventListener('click', async function () {
       const human = new Human(name, weight, height, diet);
       return human;
     })();
-    console.log(createdHuman);
 
     // Init of dinos
     const createdDino = await createDinoObj();
     createdDino.splice(4, 0, createdHuman);
-    console.log(createdDino);
 
     removeFormFromScreen();
 
+    console.log(createdHuman);
+    console.log(createdDino);
+
     for (let count = 0; count < createdDino.length; count++) {
-      createTiles(createdDino[count]);
+      createTiles(createdDino[count], createdHuman);
     }
   }
 });
